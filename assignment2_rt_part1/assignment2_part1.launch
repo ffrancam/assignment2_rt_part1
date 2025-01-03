@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- Include the assignment_2_2024 launch file -->
+	<include file="$(find assignment_2_2024)/launch/assignment1.launch" />
+	
+	<!-- Action client node -->
+	<node pkg="assignment2_rt_part1" type="action_client_node" name="action_client" output="screen" />
+	
+	<!-- Service node -->
+	<node pkg="assignment2_rt_part1" type="target_service_node" name="target_service" output="screen" />
+	
+</launch>

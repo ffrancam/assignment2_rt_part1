@@ -9,6 +9,7 @@ project(assignment2_rt_part1)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  rospy
   std_msgs
   actionlib
   geometry_msgs
@@ -137,6 +138,9 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/assignment2_rt_part1_node.cpp)
 
+#add_executable(action_client src/action_client.cpp)
+#add_executable(target_service src/target_service.cpp)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -151,6 +155,14 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+#target_link_libraries(action_client
+#	${catkin_LIBRARIES}
+#)
+
+#target_link_libraries(target_service
+#	${catkin_LIBRARIES}
+#)
 
 #############
 ## Install ##
