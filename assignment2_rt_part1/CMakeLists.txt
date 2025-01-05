@@ -138,7 +138,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/assignment2_rt_part1_node.cpp)
 
-#add_executable(action_client src/action_client.cpp)
+add_executable(action_client src/action_client.cpp)
 #add_executable(target_service src/target_service.cpp)
 
 ## Rename C++ executable without prefix
@@ -156,9 +156,9 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 
-#target_link_libraries(action_client
-#	${catkin_LIBRARIES}
-#)
+target_link_libraries(action_client
+	${catkin_LIBRARIES}
+)
 
 #target_link_libraries(target_service
 #	${catkin_LIBRARIES}
