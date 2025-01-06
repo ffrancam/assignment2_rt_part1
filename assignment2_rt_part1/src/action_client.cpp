@@ -1,6 +1,5 @@
 #include <ros/ros.h>
-#include <geometry_msgs/PoseStamped.h>
-#include <geometry_msgs/Twist.h>
+#include <assignment2_rt_part1/RobotState.h>
 #include <nav_msgs/Odometry.h>
 #include <assignment_2_2024/PlanningAction.h>
 #include <actionlib/client/simple_action_client.h>
@@ -11,12 +10,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+// Publisher for robot state
+ros::Publisher robot_state_pub;
+
 // Define the action client
 typedef actionlib::SimpleActionClient<assignment_2_2024::PlanningAction> Client;
 
-// Global variables to store robot state
-geometry_msgs::Pose current_pose;
-geometry_msgs::Twist current_velocity;
+// Robot state message
+assignment2_rt_part1::RobotState robot_state_msg;
 
 // Atomic flags to control program state
 std::atomic<bool> stop_requested(false);
@@ -49,8 +50,14 @@ int kbhit() {
 
 // Function to receive odometry data and update position and velocity
 void odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
-    current_pose = msg->pose.pose;
-    current_velocity = msg->twist.twist;
+    // Get position and velocity from odometry data
+    robot_state_msg.x = msg->pose.pose.position.x;
+    robot_state_msg.y = msg->pose.pose.position.y;
+    robot_state_msg.vel_x = msg->twist.twist.linear.x;
+    robot_state_msg.vel_z = msg->twist.twist.angular.z;
+
+    // Publish custom message
+    robot_state_pub.publish(robot_state_msg);
 }
 
 // Function to get the target coordinates from the user
@@ -84,7 +91,10 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
     ros::Rate rate(10);
 
-    ros::Publisher cmd_vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+	// Publisher
+	robot_state_pub = nh.advertise<assignment2_rt_part1::RobotState>("robot_state", 10);
+
+    // Subscriber
     ros::Subscriber odom_sub = nh.subscribe("/odom", 10, odomCallback);
 
     Client ac("/reaching_goal", true);
