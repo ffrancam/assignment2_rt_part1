@@ -13,7 +13,7 @@ This project consists of two nodes and configurations for controlling a robot's 
 ## **Getting Started**
 
 ### 1. Install ROS
-In order to run the project, ROS and turtlesim package must be installed.
+In order to run the project, ROS must be installed.
 
 ### 2. Clone the repository 
 Clone the repository into the src folder of your ROS workspace:
