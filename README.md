@@ -1,4 +1,4 @@
-# Assignment 2 - Robot Navigation
+# Assignment 2.1 - Robot Navigation
 
 ## **Overview**
 
