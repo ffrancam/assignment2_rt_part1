@@ -54,14 +54,15 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
 	FILES
 	RobotState.msg
+	Target.msg
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+   FILES
+   GetLastTarget.srv
+
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -139,7 +140,7 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/assignment2_rt_part1_node.cpp)
 
 add_executable(action_client src/action_client.cpp)
-#add_executable(target_service src/target_service.cpp)
+add_executable(target_service src/target_service.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -160,9 +161,9 @@ target_link_libraries(action_client
 	${catkin_LIBRARIES}
 )
 
-#target_link_libraries(target_service
-#	${catkin_LIBRARIES}
-#)
+target_link_libraries(target_service
+	${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##

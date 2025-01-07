@@ -19,7 +19,7 @@ typedef actionlib::SimpleActionClient<assignment_2_2024::PlanningAction> Client;
 
 // Robot state message
 assignment2_rt_part1::RobotState robot_state_msg;
-assignment3_rt_part1::Target target_msg;
+assignment2_rt_part1::Target target_msg;
 
 // Atomic flags to control program state
 std::atomic<bool> stop_requested(false);

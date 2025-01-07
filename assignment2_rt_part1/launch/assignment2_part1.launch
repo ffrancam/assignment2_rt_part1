@@ -13,6 +13,6 @@
 	<node pkg="assignment2_rt_part1" type="action_client" name="action_client" output="screen" />
 	
 	<!-- Service node -->
-	<!-- <node pkg="assignment2_rt_part1" type="target_client" name="target_service" output="screen" />
-	-->
+	<node pkg="assignment2_rt_part1" type="target_service" name="target_service" output="screen" />
+	
 </launch>
