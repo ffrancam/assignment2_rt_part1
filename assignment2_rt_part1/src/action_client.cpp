@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <assignment2_rt_part1/RobotState.h>
+#include <assignment2_rt_part1/Target.h>
 #include <nav_msgs/Odometry.h>
 #include <assignment_2_2024/PlanningAction.h>
 #include <actionlib/client/simple_action_client.h>
@@ -18,6 +19,7 @@ typedef actionlib::SimpleActionClient<assignment_2_2024::PlanningAction> Client;
 
 // Robot state message
 assignment2_rt_part1::RobotState robot_state_msg;
+assignment3_rt_part1::Target target_msg;
 
 // Atomic flags to control program state
 std::atomic<bool> stop_requested(false);
@@ -68,6 +70,8 @@ void getTargetFromUser(float& x, float& y) {
         if (std::cin >> x) {
             std::cout << "Target Y: ";
             if (std::cin >> y) {
+            	target_msg.x = x;
+            	target_msg.y = y;
                 std::cout << "Press 'x' or 'X' to stop the robot during execution." << std::endl;
                 break;
             }
@@ -87,7 +91,7 @@ void sendGoal(Client& ac, float target_x, float target_y) {
 }
 
 int main(int argc, char** argv) {
-    ros::init(argc, argv, "Assignment2_action_client");
+    ros::init(argc, argv, "action_client");
     ros::NodeHandle nh;
     ros::Rate rate(10);
 
