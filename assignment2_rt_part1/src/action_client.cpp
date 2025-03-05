@@ -1,3 +1,23 @@
+/**
+* \file action_client.cpp
+* \brief ROS action client for sending navigation goals and publishing the robot state
+* \author Francesca Magno
+* \version 1.0
+* date 27/02/2025
+*
+* Publisher to :<BR>
+*	* /robot_state<BR>
+*	* /target_topic<BR>
+*
+* Subscriber to: <BR>
+*	*odom<BR>
+*
+* Action Client :<BR>
+* Description:
+**/
+
+
+
 #include <ros/ros.h>
 #include <assignment2_rt_part1/RobotState.h>
 #include <assignment2_rt_part1/Target.h>
@@ -13,6 +33,8 @@
 
 // Publisher for robot state
 ros::Publisher robot_state_pub;
+ros::Publisher target_pub;
+
 
 // Define the action client
 typedef actionlib::SimpleActionClient<assignment_2_2024::PlanningAction> Client;
@@ -72,6 +94,7 @@ void getTargetFromUser(float& x, float& y) {
             if (std::cin >> y) {
             	target_msg.x = x;
             	target_msg.y = y;
+            	target_pub.publish(target_msg);
                 std::cout << "Press 'x' or 'X' to stop the robot during execution." << std::endl;
                 break;
             }
@@ -97,6 +120,7 @@ int main(int argc, char** argv) {
 
 	// Publisher
 	robot_state_pub = nh.advertise<assignment2_rt_part1::RobotState>("robot_state", 10);
+	target_pub = nh.advertise<assignment2_rt_part1::Target>("target_topic", 10);
 
     // Subscriber
     ros::Subscriber odom_sub = nh.subscribe("/odom", 10, odomCallback);
