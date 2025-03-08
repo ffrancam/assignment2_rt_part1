@@ -3,12 +3,7 @@
 * \brief ROS action client for sending navigation goals and publishing the robot state
 * \author Francesca Magno
 * \version 1.0
-* \date 27/02/2025
-*
-* \subsection Description: <BR>
-*   This node implements an action client that allows the user to control the robot's navigation by setting target coordinates.  
-*   The user can stop the execution at any time by pressing the "x" key.  
-*   The robot's state, including position and velocity, is continuously published.
+* \date 08/03/2025
 *
 * \subsection Published Topics:
 *	- \b /robot_state: Publishes the robot's current state, including position (x, y) and velocity (vel_x, vel_<).
@@ -19,6 +14,11 @@
 *
 * \subsection Action Clients :
 *   - \b /reaching_goal: Sends a goal containing the target coordinate (x, y) to the action server, which moves the robot to the destination.
+*
+* \subsection Description:
+*   This node implements an action client that allows the user to control the robot's navigation by setting target coordinates.  
+*   The user can stop the execution at any time by pressing the "x" key.  
+*   The robot's state, including position and velocity, is continuously published.
 *
 **/
 
