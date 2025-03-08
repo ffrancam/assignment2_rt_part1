@@ -3,17 +3,23 @@
 * \brief ROS action client for sending navigation goals and publishing the robot state
 * \author Francesca Magno
 * \version 1.0
-* date 27/02/2025
+* \date 27/02/2025
 *
-* Publisher to :<BR>
-*	* /robot_state<BR>
-*	* /target_topic<BR>
+* \subsection Description: <BR>
+*   This node implements an action client that allows the user to control the robot's navigation by setting target coordinates.  
+*   The user can stop the execution at any time by pressing the "x" key.  
+*   The robot's state, including position and velocity, is continuously published.
 *
-* Subscriber to: <BR>
-*	*odom<BR>
+* \subsection Published Topics:
+*	- \b /robot_state: Publishes the robot's current state, including position (x, y) and velocity (vel_x, vel_<).
+*	- \b /target_topic: Publishes the target coordinates set by the user (x, y).
 *
-* Action Client :<BR>
-* Description:
+* \subsection Subscribed Topics:
+*	- \b /odom: Receives odometry data to update the robot's position and velocity in real time.
+*
+* \subsection Action Clients :
+*   - \b /reaching_goal: Sends a goal containing the target coordinate (x, y) to the action server, which moves the robot to the destination.
+*
 **/
 
 
@@ -31,23 +37,30 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-// Publisher for robot state
-ros::Publisher robot_state_pub;
-ros::Publisher target_pub;
+// Publisher for robot state and target coordinates
+ros::Publisher robot_state_pub; ///< Publishes the robot's current state to /robot_state.
+ros::Publisher target_pub; ///< Publishes the target coordinates to /target_topic.
 
 
 // Define the action client
 typedef actionlib::SimpleActionClient<assignment_2_2024::PlanningAction> Client;
 
 // Robot state message
-assignment2_rt_part1::RobotState robot_state_msg;
-assignment2_rt_part1::Target target_msg;
+assignment2_rt_part1::RobotState robot_state_msg; ///< Stores the robot's state.
+assignment2_rt_part1::Target target_msg; ///< Stores the target coordinates.
 
 // Atomic flags to control program state
-std::atomic<bool> stop_requested(false);
-std::atomic<bool> goal_reached(false);
+std::atomic<bool> stop_requested(false); ///< Flag to signal a stop request by the user.
+std::atomic<bool> goal_reached(false); ///< Flag indicating whether the goal was reached.
 
-// Function to check if a key has been pressed (non-blocking)
+
+/**
+* \brief Function to check if a key has been pressed (non-blocking).
+* \return 1 if a key is pressed, 0 otherwise.
+*
+* \details This function check is a key is pressed by the user without blocking the program's execution, 
+*   allowing real-time use input during the robot's navigation to stop it.
+*/
 int kbhit() {
     struct termios oldt, newt;
     int ch;
@@ -72,7 +85,14 @@ int kbhit() {
     return 0;
 }
 
-// Function to receive odometry data and update position and velocity
+
+/**
+* \brief Callback function to handle odometry data update.
+* \param msg Pointer to teh received odometry message.
+*
+* \details This function is called when new odometry data is recieved. It updates the robot's
+* position and velocity and publishes the current robot state.
+*/
 void odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
     // Get position and velocity from odometry data
     robot_state_msg.x = msg->pose.pose.position.x;
@@ -84,7 +104,15 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
     robot_state_pub.publish(robot_state_msg);
 }
 
-// Function to get the target coordinates from the user
+
+/**
+* \brief Prompts the user to enter target coordinates.
+* \param x Reference to store the target X coordinate.
+* \param y Reference to store the target Y coordinate.
+*
+* \details This function continuously prompts the user to input valid target coordinates.
+*   It then publishes the coordinates to the target topic.
+*/
 void getTargetFromUser(float& x, float& y) {
     while (true) {
         std::cout << "Enter the target coordinates of the robot." << std::endl;
@@ -105,7 +133,16 @@ void getTargetFromUser(float& x, float& y) {
     }
 }
 
-// Function to send a goal to the action server
+
+/**
+* \brief Sends a navigation goal to the action server.
+* \param ac Reference to the action client.
+* \param target_x X-coordinate of the target. 
+* \param target_y Y-coordinate of the target.
+*
+* \details This function sends a goial with the target coordinate to the action server, 
+*   which will move the robot towards the target.
+*/
 void sendGoal(Client& ac, float target_x, float target_y) {
     assignment_2_2024::PlanningGoal goal;
     goal.target_pose.pose.position.x = target_x;
@@ -113,6 +150,17 @@ void sendGoal(Client& ac, float target_x, float target_y) {
     ac.sendGoal(goal);
 }
 
+
+/**
+* \brief Main function to run the action client.
+* \param argc Number of arguments.
+* \param argv Argument vector.
+* \return 0 on successful execution.
+* 
+* \details This function initializes the ROS node, creates the action client and handles the main loop.
+*   It allows the user to input the target coordinates, sends the goal to the action server
+*   and checks for key presses to stop the robot.
+*/
 int main(int argc, char** argv) {
     ros::init(argc, argv, "action_client");
     ros::NodeHandle nh;
@@ -125,6 +173,7 @@ int main(int argc, char** argv) {
     // Subscriber
     ros::Subscriber odom_sub = nh.subscribe("/odom", 10, odomCallback);
 
+    // Initialize the action client and wait for the server
     Client ac("/reaching_goal", true);
     ROS_INFO("Waiting for action server to start...");
     ac.waitForServer();
