@@ -8,7 +8,9 @@ This project consists of two nodes and configurations for controlling a robot's 
 - Publishing the robot's position and velocity as a custom message (x, y, vel_x, vel_z) based on data from the /odom topic.
 - Providing the coordinates of the last target set by the user when requested via a ROS service.
 
+## Documentation
 
+The Dpxygen documentation is available [here](https://ffrancam.github.io/assignment2_rt_part1/).
 
 ## **Getting Started**
 
