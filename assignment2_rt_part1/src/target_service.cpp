@@ -1,6 +1,6 @@
 /**
 * \file target_service.cpp
-* \brief ROS service to retrive the last received target coordinates.
+* \brief ROS service to retrieve the last received target coordinates.
 * \author Francesca Magno
 * \version 1.0
 * \date 08/03/2025
@@ -17,7 +17,7 @@
 * \subsection Description:
 *   This node provides a service to return the last received target coordinates.
 *   It subscribes to a topic where the target coordinates are published and stores the last received target.
-*   When requested via the servoce, the node returns the last target coordinates.
+*   When requested via the service, the node returns the last target coordinates.
 *
 **/
 
@@ -32,17 +32,17 @@
 double last_target_x = 0.0; ///< Last X coordinate
 double last_target_y = 0.0; ///< Last Y coordinate
 
-// Mutex to ensure thread safety for accesing shared data
+// Mutex to ensure thread safety for accessing shared data
 std::mutex target_mutex; ///< Mutex to ensure thread safety
 
 /**
-* \brief Service callbacl to provide the last received target coordinates.
+* \brief Service callback to provide the last received target coordinates.
 * \param req The request object, which is empty.
-* \param res The response object, which will be populated wuth the last target coordinates.
+* \param res The response object, which will be populated with the last target coordinates.
 * \return true, it indicates that the service was successfully executed. 
 *
 * \details This function handles service requests to get the last received target coordinates,
-+   using a mutex to ensure thread-safe access to shared data
+*   using a mutex to ensure thread-safe access to shared data
 */
 bool getLastTarget(assignment2_rt_part1::GetLastTarget::Request &req,
                    assignment2_rt_part1::GetLastTarget::Response &res) {
@@ -61,17 +61,17 @@ bool getLastTarget(assignment2_rt_part1::GetLastTarget::Request &req,
 
 /**
 * \brief Callback function to handle incoming target messages.
-* \param msg The received target message containing new cordinates.
+* \param msg The received target message containing new coordinates.
 *
 * \details This function is called whenever a new target message is received.
-*   It updates the last received target coordinates. The mutes is again used to ensure thread safety.
+*   It updates the last received target coordinates. The mutex is again used to ensure thread safety.
 */
 void targetCallback(const assignment2_rt_part1::Target &msg) {
 
 	// Lock the mutex to ensure safety
     std::lock_guard<std::mutex> lock(target_mutex);
     
-    // Update the last target coosdinates with the received message data
+    // Update the last target coordinates with the received message data
     last_target_x = msg.x;
     last_target_y = msg.y;
 

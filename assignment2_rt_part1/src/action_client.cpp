@@ -13,7 +13,7 @@
 *	- \b /odom: Receives odometry data to update the robot's position and velocity in real time.
 *
 * \subsection Action Clients :
-*   - \b /reaching_goal: Sends a goal containing the target coordinate (x, y) to the action server, which moves the robot to the destination.
+*   - \b /reaching_goal: Sends a goal containing the target coordinates (x, y) to the action server, which moves the robot to the destination.
 *
 * \subsection Description:
 *   This node implements an action client that allows the user to control the robot's navigation by setting target coordinates.  
@@ -88,7 +88,7 @@ int kbhit() {
 
 /**
 * \brief Callback function to handle odometry data update.
-* \param msg Pointer to teh received odometry message.
+* \param msg Pointer to the received odometry message.
 *
 * \details This function is called when new odometry data is recieved. It updates the robot's
 * position and velocity and publishes the current robot state.
@@ -107,8 +107,8 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 
 /**
 * \brief Prompts the user to enter target coordinates.
-* \param x Reference to store the target X coordinate.
-* \param y Reference to store the target Y coordinate.
+* \param x Reference to store the target X-coordinate.
+* \param y Reference to store the target Y-coordinate.
 *
 * \details This function continuously prompts the user to input valid target coordinates.
 *   It then publishes the coordinates to the target topic.
