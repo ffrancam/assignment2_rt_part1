@@ -10,7 +10,7 @@ This project consists of two nodes and configurations for controlling a robot's 
 
 ## Documentation
 
-The Dpxygen documentation is available [here](https://ffrancam.github.io/assignment2_rt_part1/).
+The Doxygen documentation is available [here](https://ffrancam.github.io/assignment2_rt_part1/).
 
 ## **Getting Started**
 
