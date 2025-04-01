@@ -1,7 +1,7 @@
-<map id="src/target_service.cpp" name="src/target_service.cpp">
-<area shape="rect" id="node1" title="ROS service to retrieve the last received target coordinates." alt="" coords="201,5,366,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,87,84,114"/>
-<area shape="rect" id="node3" title=" " alt="" coords="108,80,272,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="296,80,460,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="485,87,549,114"/>
+<map id="assignment2_rt_part1/src/target_service.cpp" name="assignment2_rt_part1/src/target_service.cpp">
+<area shape="rect" id="node1" title="ROS service to retrieve the last received target coordinates." alt="" coords="199,5,368,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,102,84,129"/>
+<area shape="rect" id="node3" title=" " alt="" coords="108,95,272,136"/>
+<area shape="rect" id="node4" title=" " alt="" coords="296,95,460,136"/>
+<area shape="rect" id="node5" title=" " alt="" coords="485,102,549,129"/>
 </map>
