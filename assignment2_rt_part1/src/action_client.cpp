@@ -13,6 +13,7 @@
 
 // Publisher for robot state
 ros::Publisher robot_state_pub;
+ros::Publisher target_pub; 
 
 // Define the action client
 typedef actionlib::SimpleActionClient<assignment_2_2024::PlanningAction> Client;
@@ -72,6 +73,7 @@ void getTargetFromUser(float& x, float& y) {
             if (std::cin >> y) {
             	target_msg.x = x;
             	target_msg.y = y;
+            	target_pub.publish(target_msg);
                 std::cout << "Press 'x' or 'X' to stop the robot during execution." << std::endl;
                 break;
             }
@@ -97,6 +99,7 @@ int main(int argc, char** argv) {
 
 	// Publisher
 	robot_state_pub = nh.advertise<assignment2_rt_part1::RobotState>("robot_state", 10);
+	target_pub = nh.advertise<assignment2_rt_part1::Target>("target_topic", 10);
 
     // Subscriber
     ros::Subscriber odom_sub = nh.subscribe("/odom", 10, odomCallback);
